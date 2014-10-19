@@ -1,0 +1,36 @@
+{
+  "name": "hyper-config",
+  "version": "0.0.1",
+  "description": "JSON config wrapper with merge, references, string macroces and tagging",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "traverse": "^0.6.6"
+  },
+  "devDependencies": {
+    "chai": "^1.9.2",
+    "mocha": "^1.21.5"
+  },
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zerkalica/hyper-config.git"
+  },
+  "keywords": [
+    "config",
+    "json",
+    "merge",
+    "environment",
+    "tags"
+  ],
+  "author": "Sergey Yuferev <nexor@ya.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zerkalica/hyper-config/issues"
+  },
+  "homepage": "https://github.com/zerkalica/hyper-config"
+}
