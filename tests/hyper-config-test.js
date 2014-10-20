@@ -68,10 +68,6 @@ describe('hyper-config', function () {
       expect(c.get('logger.transports.1')).not.to.be.equal(c.get('x.transport1'));
     });
 
-    it('should build references map', function () {
-      expect(c.getRef('logger.transports.0')).to.be.equal('x.transport1');
-    });
-
     it('should remove config parts, marked as @disable', function () {
       var hc = new HyperConfig();
       hc.addConfig(testConfig[0]);

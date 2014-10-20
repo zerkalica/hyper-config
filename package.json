@@ -1,6 +1,6 @@
 {
   "name": "hyper-config",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "JSON config wrapper with merge, references, string macroces and tagging",
   "main": "index.js",
   "directories": {
