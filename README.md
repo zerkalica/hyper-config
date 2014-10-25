@@ -12,7 +12,7 @@ HyperConfig(object):
   project: project name
 
 * addConfig(object): deep merge js object to config
-* addConfigPath(string): add path to directory with yml or json config files. Config file name format: [<project>#]config.env.(yml|json). If env in file name == 'all', loads file for any environment option. If project == 'all' or not present, loads file for any project option.
+* addConfigPath(string): add path to directory with yml or json config files. Config file name format: [project#]config.env.(yml|json). If env in file name == 'all', loads file for any environment option. If project == 'all' or not present, loads file for any project option.
 * build(): build config and return config session object:
   * get(string): get config part by dot-separated path string or undefined if wrong path
   * getByTag(string): return array with config parts, marked by tag
@@ -88,7 +88,7 @@ console.log(config.get('console.email')); // test-name@mail.test
 
 ## Scan directories with config files
 
-Config file name format: [<project>#]config.env.(yml|json)
+Config file name format: [project#]config.env.(yml|json)
 
 ``` yml
 # ./config/test.all.yml
