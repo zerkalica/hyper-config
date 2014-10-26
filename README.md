@@ -1,6 +1,6 @@
 # Hyper config
 
-Config wrapper with merge, references, string macros, tagging, yml and json file loading, environment support.
+Config wrapper with merge, references, string macros, tagging.
 
 ``` javascript
 var HyperConfig = require('hyper-config');
@@ -84,63 +84,6 @@ console.log(config.get('console.obj.data')); // test data
 config.get('common.data').name = 'test 2 data';
 console.log(config.get('console.obj.data')); // test 2 data
 console.log(config.get('console.email')); // test-name@mail.test
-```
-
-## Scan directories with config files
-
-Config file name format: [project#]config.env.(yml|json)
-
-``` yml
-# ./config/test.all.yml
-
-console:
-  proc: test
-  name: test
-```
-
-``` yml
-# ./config/app1#main.all.yml
-app1:
-  proc: test-test
-```
-
-``` yml
-# ./config/test.dev.yml
-
-console:
-  proc: test-dev
-  name: test
-```
-
-./config/example.dev.json
-``` json
-{
-  "example": {
-    "proc": "example-dev",
-    "name": "test"
-  }
-}
-```
-
-``` javascript
-var HyperConfig = require('hyper-config');
-
-var config = HyperConfig({env: 'dev', project: 'app1'})
-  .addConfigPath(__dirname + '/config');
-  .build();
-
-console.log(config.get('console.proc')); // test-dev
-console.log(config.get('example.proc')); // example-dev
-console.log(config.get('app1.proc')); // test-app
-
-var config = HyperConfig({env: 'prod', project: 'app2'})
-  .addConfigPath(__dirname + '/config');
-  .build();
-
-console.log(config.get('console.proc')); // test
-console.log(config.get('example.proc')); // undefined
-console.log(config.get('app1.proc')); // undefined
-
 ```
 
 ## Tagging
