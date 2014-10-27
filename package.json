@@ -1,14 +1,13 @@
 {
   "name": "hyper-config",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Config wrapper with merge, references, string macros, tagging, yml and json file loading, environment support",
   "main": "index.js",
   "directories": {
     "test": "tests"
   },
   "dependencies": {
-    "traverse": "^0.6.6",
-    "yamljs": "^0.2.1"
+    "traverse": "^0.6.6"
   },
   "devDependencies": {
     "chai": "^1.9.2",
