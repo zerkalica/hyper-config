@@ -12,8 +12,12 @@ describe('hyper-config', function () {
           '@x.transport2'
         ],
         'some': {
-          'del': 'test/@x.ref1@/@x.ref2@/path'
+          'del': 't@@e@@st/@x.ref1@/@x.ref2@/path',
+          'email': 'test@@mail.test'
         },
+        'some2': {
+          'email': 'test@@mail.test'
+        }
       }
     },
     {
@@ -68,6 +72,10 @@ describe('hyper-config', function () {
       expect(c.get('logger.transports.1')).not.to.be.equal(c.get('x.transport1'));
     });
 
+    it('should  replace @@ to @', function () {
+      expect(c.get('logger.some2.email')).to.be.equal('test@mail.test');
+    });
+
     it('should remove config parts, marked as @disable', function () {
       var hc = new HyperConfig();
       hc.addConfig(testConfig[0]);
@@ -87,7 +95,7 @@ describe('hyper-config', function () {
       hc.addConfig(testConfig[0]);
       hc.addConfig(testConfig[1]);
       var c = hc.build();
-      expect(c.get('logger.some.del')).to.be.equal('test/testref1/testref2/path');
+      expect(c.get('logger.some.del')).to.be.equal('t@e@st/testref1/testref2/path');
     });
 
     it('should get data array by tag name', function () {
