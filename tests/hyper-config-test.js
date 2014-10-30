@@ -30,6 +30,9 @@ describe('hyper-config', function () {
         'transport2': {
           'name': 'tr2',
         },
+      },
+      'logger.some2.email2.test': {
+        'tt': 'test string'
       }
     },
     {
@@ -72,8 +75,17 @@ describe('hyper-config', function () {
       expect(c.get('logger.transports.1')).not.to.be.equal(c.get('x.transport1'));
     });
 
-    it('should  replace @@ to @', function () {
+    it('should replace @@ to @', function () {
       expect(c.get('logger.some2.email')).to.be.equal('test@mail.test');
+    });
+
+    it('should resolve dot-path to object', function () {
+      console.log(c.get('logger.some2'));
+      expect(c.get('logger.some2.email2')).to.be.deep.equal({
+        test: {
+          tt: 'test string'
+        }
+      });
     });
 
     it('should remove config parts, marked as @disable', function () {

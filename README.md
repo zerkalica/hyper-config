@@ -45,12 +45,18 @@ if (process.env.NODE_ENV === 'development') {
   };
 }
 
+var someConfig = {
+  'logger.transports.file.fileName': 'test-some'
+};
+// expands to {logger: {transports: { file: {fileName: 'test'}}}}
+
 var config = HyperConfig()
   .addConfig(defaultConfig);
   .addConfig(envConfig)
+  .addConfig(someConfig)
   .build();
 
-console.log(config.get('logger.transports.file.fileName')); // test-dev in development, test in other
+console.log(config.get('logger.transports.file.fileName')); // test-some in development, test in other
 console.log(config.get('wrongpath')); // undefined
 
 ```
