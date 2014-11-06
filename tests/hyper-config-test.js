@@ -80,7 +80,6 @@ describe('hyper-config', function () {
     });
 
     it('should resolve dot-path to object', function () {
-      console.log(c.get('logger.some2'));
       expect(c.get('logger.some2.email2')).to.be.deep.equal({
         test: {
           tt: 'test string'
