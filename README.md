@@ -5,21 +5,75 @@ Config wrapper with merge, references, string macros, tagging.
 ``` javascript
 var HyperConfig = require('hyper-config');
 ```
+
 ## Api
 
 HyperConfig(object):
-  env: environment name
-  project: project name
+  refLabel: string, '&' - reference label to config parts
+  annotationLabel: string, '@' - annotation label, mark control config parts
+  macroBegin: string, '{' - used in macro string replacement
+  macroEnd: string, '}' - used in macro string replacement
 
 * addConfig(object): deep merge js object to config
-* addConfigPath(string): add path to directory with yml or json config files. Config file name format: [project#]config.env.(yml|json). If env in file name == 'all', loads file for any environment option. If project == 'all' or not present, loads file for any project option.
 * build(): build config and return config session object:
   * get(string): get config part by dot-separated path string or undefined if wrong path
   * getByTag(string): return array with config parts, marked by tag
 
+## Overview
+  &<path> - link to parts of config
+  &{path} - replacement macro string
+  &disable - command to delete this config object branch
+  @tag - array of tag names, group by provided tag names
+
+```json
+"section": {
+  "subsection": {
+    "value": "test"
+  },
+  "name1": {
+    "value": 123,
+    "param": "&{section.subsection.value}/qweqwe",
+    "param2": "&&test/&&{section.subsection.value}",
+    "@tag": ["tag1", "tag2"]
+  },
+  "name2": {
+    "ref": "&section.name1"
+  },
+  "name3": {
+    val: "test"
+  }
+},
+
+"section2.subsection2.name1": {
+  "value": "example"
+}
+```
+
+```js
+//init.js
+var Config = HyperConfig().addConfig(require('./config.json'));
+
+Config.addConfig({
+  section: {
+    name3: '&disable'
+  }
+});
+
+var config = Config.build();
+
+console.log(config.get('section.subsection')); //{value: 'test'}
+console.log(config.get('section.subsection.qweiweruhwitur')); // undefined
+console.log(config.get('section2.subsection2.name1.value')); // example
+console.log(config.get('section.name1.param')); // test/qweqwe
+console.log(config.get('section.name1.param2')); // &test/&{section.subsection.value}
+console.log(config.get('section.name2.ref')); // {value: 123, param: 'test/qweqwe'}
+console.log(config.get('section.name3')); // undefined
+console.log(config.getByTag('tag1')); // [{value: 123, param: 'test/qweqwe'}]
+```
+
 ## Merge configs
 
-``` javascript
+```javascript
 var HyperConfig = require('hyper-config');
 
 var defaultConfig = {
@@ -63,15 +117,15 @@ console.log(config.get('wrongpath')); // undefined
 
 ## References and macros
 
-``` javascript
+```javascript
 var HyperConfig = require('hyper-config');
 
 var defaultConfig = {
   console: {
     proc: 'console.log',
-    name: '@common.name',
-    obj: '@common.data',
-    email: '@common.name@-name@@mail.test'
+    name: '&common.name',
+    obj: '&common.data',
+    email: '&common.name@-name@@mail.test'
   },
   common: {
     name: 'test',
@@ -94,7 +148,7 @@ console.log(config.get('console.email')); // test-name@mail.test
 
 ## Tagging
 
-``` javascript
+```javascript
 var HyperConfig = require('hyper-config');
 
 var defaultConfig = {
