@@ -1,6 +1,6 @@
 {
   "name": "hyper-config",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "Config wrapper with merge, references, string macros, tagging, yml and json file loading, environment support",
   "main": "index.js",
   "directories": {

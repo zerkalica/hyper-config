@@ -1,6 +1,6 @@
 # Hyper config
 
-Config wrapper with merge, references, string macros, tagging.
+Config wrapper with merging, references, string macros, tagging, etc.
 
 ``` javascript
 var HyperConfig = require('hyper-config');
@@ -8,11 +8,11 @@ var HyperConfig = require('hyper-config');
 
 ## Api
 
-HyperConfig(object):
-  refLabel: string, '~' - reference label to config parts
-  annotationLabel: string, '@' - annotation label, mark control config parts
-  macroBegin: string, '{' - used in macro string replacement
-  macroEnd: string, '}' - used in macro string replacement
+* HyperConfig(object):
+  * refLabel: string, '~' - reference label to config parts
+  * annotationLabel: string, '@' - annotation label, mark control config parts
+  * macroBegin: string, '{' - used in macro string replacement
+  * macroEnd: string, '}' - used in macro string replacement
 
 * addConfig(object): deep merge js object to config
 * build(): build config and return config session object:
@@ -20,10 +20,10 @@ HyperConfig(object):
   * getByTag(string): return array with config parts, marked by tag
 
 ## Overview
-  ~<path> - link to parts of config
-  ~{path} - replacement macro string
-  ~disable - command to delete this config object branch
-  @tag - array of tag names, group by provided tag names
+* ~<path> - link to parts of config
+* ~{path} - replacement macro string
+* ~disable - command to delete this config object branch
+* @tag - array of tag names, group by provided tag names
 
 ```json
 "section": {
@@ -40,7 +40,7 @@ HyperConfig(object):
     "ref": "~section.name1"
   },
   "name3": {
-    val: "test"
+    "val": "test"
   }
 },
 
