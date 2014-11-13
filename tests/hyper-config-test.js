@@ -8,15 +8,15 @@ describe('hyper-config', function () {
     {
       'logger': {
         'transports': [
-          '&x.transport1',
-          '&x.transport2'
+          '~x.transport1',
+          '~x.transport2'
         ],
         'some': {
-          'del': 't&&e&&st/&{x.ref1}/&{x.ref2}/path',
-          'email': 'test@m&&ail.test'
+          'del': 't~~e~~st/~{x.ref1}/~{x.ref2}/path',
+          'email': 'test@m~~ail.test'
         },
         'some2': {
-          'email': 'test@m&&ail.test'
+          'email': 'test@m~~ail.test'
         }
       }
     },
@@ -37,7 +37,7 @@ describe('hyper-config', function () {
     },
     {
       'logger': {
-        'some': '&disable'
+        'some': '~disable'
       }
     },
 
@@ -75,8 +75,8 @@ describe('hyper-config', function () {
       expect(c.get('logger.transports.1')).not.to.be.equal(c.get('x.transport1'));
     });
 
-    it('should replace && to &', function () {
-      expect(c.get('logger.some2.email')).to.be.equal('test@m&ail.test');
+    it('should replace ~~ to ~', function () {
+      expect(c.get('logger.some2.email')).to.be.equal('test@m~ail.test');
     });
 
     it('should resolve dot-path to object', function () {
@@ -87,7 +87,7 @@ describe('hyper-config', function () {
       });
     });
 
-    it('should remove config parts, marked as &disable', function () {
+    it('should remove config parts, marked as ~disable', function () {
       var hc = new HyperConfig();
       hc.addConfig(testConfig[0]);
       var c = hc.build();
@@ -96,7 +96,7 @@ describe('hyper-config', function () {
       hc = new HyperConfig();
       hc.addConfig(testConfig[0]);
       hc.addConfig(testConfig[2]);
-      expect(hc._config.get(['logger','some'])).to.be.equal('&disable');
+      expect(hc._config.get(['logger','some'])).to.be.equal('~disable');
       c = hc.build();
       expect(c.get('logger')).not.to.have.property('some');
     });
@@ -106,7 +106,7 @@ describe('hyper-config', function () {
       hc.addConfig(testConfig[0]);
       hc.addConfig(testConfig[1]);
       var c = hc.build();
-      expect(c.get('logger.some.del')).to.be.equal('t&e&st/testref1/testref2/path');
+      expect(c.get('logger.some.del')).to.be.equal('t~e~st/testref1/testref2/path');
     });
 
     it('should get data array by tag name', function () {

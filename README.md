@@ -9,7 +9,7 @@ var HyperConfig = require('hyper-config');
 ## Api
 
 HyperConfig(object):
-  refLabel: string, '&' - reference label to config parts
+  refLabel: string, '~' - reference label to config parts
   annotationLabel: string, '@' - annotation label, mark control config parts
   macroBegin: string, '{' - used in macro string replacement
   macroEnd: string, '}' - used in macro string replacement
@@ -20,9 +20,9 @@ HyperConfig(object):
   * getByTag(string): return array with config parts, marked by tag
 
 ## Overview
-  &<path> - link to parts of config
-  &{path} - replacement macro string
-  &disable - command to delete this config object branch
+  ~<path> - link to parts of config
+  ~{path} - replacement macro string
+  ~disable - command to delete this config object branch
   @tag - array of tag names, group by provided tag names
 
 ```json
@@ -32,12 +32,12 @@ HyperConfig(object):
   },
   "name1": {
     "value": 123,
-    "param": "&{section.subsection.value}/qweqwe",
-    "param2": "&&test/&&{section.subsection.value}",
+    "param": "~{section.subsection.value}/qweqwe",
+    "param2": "~~test/~~{section.subsection.value}",
     "@tag": ["tag1", "tag2"]
   },
   "name2": {
-    "ref": "&section.name1"
+    "ref": "~section.name1"
   },
   "name3": {
     val: "test"
@@ -55,7 +55,7 @@ var Config = HyperConfig().addConfig(require('./config.json'));
 
 Config.addConfig({
   section: {
-    name3: '&disable'
+    name3: '~disable'
   }
 });
 
@@ -65,7 +65,7 @@ console.log(config.get('section.subsection')); //{value: 'test'}
 console.log(config.get('section.subsection.qweiweruhwitur')); // undefined
 console.log(config.get('section2.subsection2.name1.value')); // example
 console.log(config.get('section.name1.param')); // test/qweqwe
-console.log(config.get('section.name1.param2')); // &test/&{section.subsection.value}
+console.log(config.get('section.name1.param2')); // ~test/~{section.subsection.value}
 console.log(config.get('section.name2.ref')); // {value: 123, param: 'test/qweqwe'}
 console.log(config.get('section.name3')); // undefined
 console.log(config.getByTag('tag1')); // [{value: 123, param: 'test/qweqwe'}]
@@ -123,9 +123,9 @@ var HyperConfig = require('hyper-config');
 var defaultConfig = {
   console: {
     proc: 'console.log',
-    name: '&common.name',
-    obj: '&common.data',
-    email: '&common.name@-name@@mail.test'
+    name: '~common.name',
+    obj: '~common.data',
+    email: '~common.name@-name@@mail.test'
   },
   common: {
     name: 'test',
